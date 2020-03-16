@@ -18,7 +18,7 @@ function RenderDish(props) {
             </Text>
             <Icon raised
                   reverse
-                  name={props.favorite ? 'heart' : 'heart-to'}
+                  name={props.favorite ? 'heart' : 'heart-o'}
                   type='font-awesome'
                   color='#f50'
                   onPress={() => props.favorite ? console.log('Already favorite') : props.onPress()}
@@ -71,6 +71,10 @@ class DishDetail extends Component{
 
     }
 
+    markFavorite(dishId){
+        this.setState({favorites:this.state.favorites.concat(dishId)})
+    }
+
 
 
 
@@ -82,8 +86,13 @@ class DishDetail extends Component{
         const dishId = this.props.navigation.getParam('dishId')
         return(
             <ScrollView>
-             <RenderDish dishes={this.state.dishes[+dishId]}/>
-             <RenderComments comments={this.state.comments.filter((comment) => comment.dishId === dishId)} />
+                 <RenderDish
+                     dishes={this.state.dishes[+dishId]}
+                     favorite={this.state.favorites.some(el => el === dishId)}
+                     onPress={() => this.markFavorite(dishId)}
+                    />
+                 <RenderComments comments={this.state.comments.filter((comment) => comment.dishId === dishId)} />
+
             </ScrollView>
         )
     }
