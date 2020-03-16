@@ -1,4 +1,5 @@
-.idea/*
+git rm
+.idea/
 node_modules/**/*
 .expo/*
 npm-debug.*
