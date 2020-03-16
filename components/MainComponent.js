@@ -7,10 +7,16 @@ import DishDetail from "./DishdetailComponent";
 import { createStackNavigator,createDrawerNavigator }  from 'react-navigation'
 import Contact from "./ContactComponent";
 import About from "./AboutComponent";
-
+import {Icon} from 'react-native-elements'
 
 const MenuNavigator = createStackNavigator({
-    Menu:{screen: Menu},
+    Menu:{screen: Menu,
+        navigationOptions:({ navigation }) => ({
+            headerLeft: <Icon name="menu"
+                              size={24}
+                              color='white'
+                              onPress={()=> navigation.toggleDrawer()}/>
+        })},
     DishDetail:{screen: DishDetail},
     Contact:{screen:Contact},
     About:{screen:About}
@@ -30,43 +36,55 @@ const MenuNavigator = createStackNavigator({
 const HomeNavigator = createStackNavigator({
     Home:{screen: Home},
 },{
-    navigationOptions:{
+    navigationOptions:({navigation}) =>({
         headerStyle: {
             backgroundColor:'#512DA8'
         },
         headerTintColor:'#fff',
         headerTitleStyle:{
             color:'#fff'
-        }
-    }
+        },
+        headerLeft: <Icon name="menu"
+                          size={24}
+                          color='white'
+                          onPress={()=> navigation.toggleDrawer()}/>
+    })
 })
 
 const ContactNavigator = createStackNavigator({
     Contact:{screen: Contact},
 },{
-    navigationOptions:{
+    navigationOptions:({navigation}) =>({
         headerStyle: {
             backgroundColor:'#512DA8'
         },
         headerTintColor:'#fff',
         headerTitleStyle:{
             color:'#fff'
-        }
-    }
+        },
+        headerLeft: <Icon name="menu"
+                          size={24}
+                          color='white'
+                          onPress={()=> navigation.toggleDrawer()}/>
+    })
 })
 
 const AboutNavigator = createStackNavigator({
     About:{screen: About},
 },{
-    navigationOptions:{
+    navigationOptions:({navigation}) =>({
         headerStyle: {
             backgroundColor:'#512DA8'
         },
         headerTintColor:'#fff',
         headerTitleStyle:{
             color:'#fff'
-        }
-    }
+        },
+        headerLeft: <Icon name="menu"
+                          size={24}
+                          color='white'
+                          onPress={()=> navigation.toggleDrawer()}/>
+    })
 })
 
 const MainNavigator = createDrawerNavigator({
@@ -74,28 +92,60 @@ const MainNavigator = createDrawerNavigator({
            screen: HomeNavigator,
            navigationOptions:{
                title:'Home',
-               drawerLabel:'Home'
+               drawerLabel:'Home',
+               drawerIcon:({tintColor}) => (
+                   <Icon
+                       name='home'
+                       type='font-awesome'
+                       size={24}
+                       color={tintColor}
+                   />
+               )
            }
         },
         Menu:{
             screen:MenuNavigator,
             navigationOptions:{
                 title:'Menu',
-                drawerLabel:'Menu'
+                drawerLabel:'Menu',
+                drawerIcon:({tintColor}) => (
+                    <Icon
+                        name='list'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
             }
         },
         Contact: {
             screen:ContactNavigator,
             navigationOptions:{
                 title:'Contact Us',
-                drawerLabel:'Contact Us'
+                drawerLabel:'Contact Us',
+                drawerIcon:({tintColor}) => (
+                    <Icon
+                        name='address-card'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
             }
         },
         About: {
             screen:AboutNavigator,
             navigationOptions:{
-                title:'About Us',
-                drawerLabel:'About Us'
+                title:'info-circlex',
+                drawerLabel:'About Us',
+                drawerIcon:({tintColor}) => (
+                    <Icon
+                        name='home'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
             }
         }
 

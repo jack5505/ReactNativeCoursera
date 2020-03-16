@@ -1,31 +1,22 @@
 import React,{Component} from 'react'
-import {Text,ScrollView,View} from 'react-native'
+import {Text,ScrollView,View,FlatList} from 'react-native'
 import {Card, ListItem} from 'react-native-elements'
 import {ADDRESS} from "../shared/address";
 import {LEADERS} from "../shared/leaders";
 
 
 
-function RenderItem(props) {
-    const item = props.item;
-    if(item != null){
-        return(
-            <View>
-                <ListItem
-                    leftAvatar={{source:require('../shared/images/alberto.png')}}
-                    title={item.name}
-                />
-                <Text>
-                    {item.description}
-                </Text>
-            </View>
-
-        )
-    }else{
-        return(
-            <View/>
-        )
-    }
+function History(props) {
+    const item = props.history;
+  return(
+      <Card
+          title="Our History"
+      >
+          <Text>
+              {item}
+          </Text>
+      </Card>
+  )
 
 }
 
@@ -45,26 +36,27 @@ class About extends Component{
     }
 
     render() {
+        const renderLeaders = ({item, index}) => {
+
+            return (
+                <ListItem
+                    key={index}
+                    title={item.name}
+                    subtitle={item.description}
+                    hideChevron={true}
+                    leftAvatar={{ source: require('../shared/images/alberto.png') }}
+                />
+            );
+        }
         return (
             <View>
-                <Card
-                    title="Our History"
-                    >
-                    <Text>
-                        {this.state.history}
-                    </Text>
+                <History history={this.state.history}/>
+                <Card>
+                    <FlatList
+                        data={this.state.leaders}
+                        renderItem={renderLeaders}
+                    />
                 </Card>
-                <Card
-                    title="Corporate Leadership"
-                >
-                {
-
-                    this.state.leaders.map((leader) =>{
-                        return <RenderItem item={leader} key={leader.id}/>
-                    })
-                }
-                </Card>
-
 
             </View>
 
