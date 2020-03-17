@@ -18,3 +18,15 @@ export const fetch = () => (dispatch) => {
         .then(comments => dispatch(addComments(comments)))
         .then(error => dispatch(commentsFailed(error.message)));
 };
+
+export const addComments = (comments) => ({
+    type: ActionType.ADD_COMMENTS,
+    payload: comments
+})
+
+export const commentsFailed = (error) => ({
+    type: ActionType.COMMENTS_FAILED,
+    payload:error
+})
+
+
