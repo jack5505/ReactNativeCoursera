@@ -6,7 +6,7 @@ import {LEADERS} from "../shared/leaders";
 import {baseUrl} from "../shared/baseUrl";
 import {connect} from 'react-redux'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return{
         leaders:state.leaders
     }
@@ -47,6 +47,7 @@ class About extends Component{
         }
         return (
             <View>
+                {console.log(this.props.leaders)}
                 {/*<History history={this.props.history.history}/>*/}
                 <Card>
                     <FlatList
