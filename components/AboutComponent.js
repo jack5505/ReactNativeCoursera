@@ -11,7 +11,7 @@ const mapStateToProps = state => {
     return{
         leaders:state.leaders
     }
-}
+};
 
 function History(props) {
     const item = props.history;
@@ -31,7 +31,7 @@ class About extends Component{
 
     static navigationOptions={
         title:'About'
-    }
+    };
 
     render() {
         const renderLeaders = ({item, index}) => {
@@ -45,7 +45,7 @@ class About extends Component{
                     leftAvatar={{ source: {uri:baseUrl+item.image}}}
                 />
             );
-        }
+        };
         return (
             <View>
                 {console.log(this.props.leaders)}

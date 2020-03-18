@@ -108,4 +108,4 @@ class DishDetail extends Component{
 
 }
 
-export default connect((mapStateToProps)(DishDetail));
+export default connect(mapStateToProps)(DishDetail);

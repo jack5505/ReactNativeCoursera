@@ -5,12 +5,13 @@ import {baseUrl} from "../shared/baseUrl";
 import {connect} from 'react-redux'
 
 const mapStateToProps = state => {
-    return{
-        dishes:state.dishes,
-        comments:state.comments,
-        leaders:state.leaders
+    return {
+        dishes: state.dishes,
+        comments: state.comments,
+        promotions: state.promotions,
+        leaders: state.leaders
     }
-}
+};
 
 
 function RenderItem(props) {
@@ -53,4 +54,4 @@ class Home extends Component{
     }
 }
 
-export default connect((mapStateToProps)(Home));
+export default connect(mapStateToProps)(Home);

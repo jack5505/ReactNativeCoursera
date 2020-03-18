@@ -8,6 +8,28 @@ import { createStackNavigator,createDrawerNavigator, DrawerItems, SafeAreaView }
 import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 import {Icon} from 'react-native-elements'
+import {fetchComments,fetchLeaders,fetchDishes,fetchPromotions} from "../redux/ActionCreators";
+import {connect} from 'react-redux'
+const mapStateToProps = state =>{
+    return {
+        dishes:state.dishes,
+        comments:state.comments,
+        promotions:state.promotions,
+        leaders:state.leaders
+    }
+}
+
+const mapDispatchToProps = dispatch =>({
+    fetchDishes:()=>dispatch(fetchDishes()),
+    fetchPromotions:()=>dispatch(fetchPromotions()),
+    fetchComments:()=>dispatch(fetchComments()),
+    fetchLeaders:()=>dispatch(fetchLeaders()),
+
+})
+
+
+
+
 
 const MenuNavigator = createStackNavigator({
     Menu:{screen: Menu,
@@ -180,7 +202,12 @@ const MainNavigator = createDrawerNavigator({
 
 
 class MainComponent extends Component{
-
+    componentDidMount() {
+        this.props.fetchDishes();
+        this.props.fetchComments();
+        this.props.fetchPromotions();
+        this.props.fetchLeaders();
+    }
     render() {
         return (
             <View style={{flex:1,paddingTop:Platform.OS==='ios' ? 0  : 5}}>
@@ -213,4 +240,4 @@ const styles = StyleSheet.create({
         height:60
     }
 })
-export default MainComponent;
+export default connect(mapStateToProps, mapDispatchToProps)(MainComponent);
