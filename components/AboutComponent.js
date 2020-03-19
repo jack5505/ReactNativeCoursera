@@ -56,8 +56,17 @@ class About extends Component{
                 </ScrollView>
             )
         }
-
-
+        else if(this.props.leaders.errMess){
+            return(
+                <ScrollView>
+                    <History/>
+                    <Card>
+                        <Text>{this.props.leaders.errMess}</Text>
+                    </Card>
+                </ScrollView>
+            )
+        }
+    else{
         return (
             <ScrollView>
                 <History/>
@@ -67,11 +76,9 @@ class About extends Component{
                         renderItem={renderLeaders}
                     />
                 </Card>
-
             </ScrollView>
-
-
         );
+        }
     }
 }
 export default connect(mapStateToProps)(About);
