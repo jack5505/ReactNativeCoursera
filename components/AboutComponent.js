@@ -1,10 +1,9 @@
 import React,{Component} from 'react'
 import {Text,ScrollView,View,FlatList} from 'react-native'
 import {Card, ListItem} from 'react-native-elements'
-import {ADDRESS} from "../shared/address";
-import {LEADERS} from "../shared/leaders";
 import {baseUrl} from "../shared/baseUrl";
 import {connect} from 'react-redux'
+import {LoadingComponent} from "./LoadingComponent";
 
 
 const mapStateToProps = state => {
@@ -46,10 +45,22 @@ class About extends Component{
                 />
             );
         };
+
+        if(this.props.leaders.isLoading){
+            return(
+                <ScrollView>
+                    <History/>
+                    <Card>
+                        <LoadingComponent/>
+                    </Card>
+                </ScrollView>
+            )
+        }
+
+
         return (
-            <View>
-                {console.log(this.props.leaders)}
-                {/*<History history={this.props.history.history}/>*/}
+            <ScrollView>
+                <History/>
                 <Card>
                     <FlatList
                         data={this.props.leaders.leaders}
@@ -57,7 +68,7 @@ class About extends Component{
                     />
                 </Card>
 
-            </View>
+            </ScrollView>
 
 
         );
