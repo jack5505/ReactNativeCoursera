@@ -10,6 +10,8 @@ import About from "./AboutComponent";
 import {Icon} from 'react-native-elements'
 import {fetchComments,fetchLeaders,fetchDishes,fetchPromotions} from "../redux/ActionCreators";
 import {connect} from 'react-redux'
+import Reservation from './ReservationComponent'
+
 const mapStateToProps = state =>{
     return {
         dishes:state.dishes,
@@ -41,7 +43,8 @@ const MenuNavigator = createStackNavigator({
         })},
     DishDetail:{screen: DishDetail},
     Contact:{screen:Contact},
-    About:{screen:About}
+    About:{screen:About},
+    Reservation:{screen:Reservation}
 
 },{
     initialRouteName: 'Menu',
@@ -54,6 +57,23 @@ const MenuNavigator = createStackNavigator({
             color:'#fff'
         }
     }
+});
+
+const ReservationNavigator = createStackNavigator({
+    Reservation: { screen: Reservation }
+}, {
+    navigationOptions: ({ navigation }) => ({
+        headerStyle: {
+            backgroundColor: "#512DA8"
+        },
+        headerTitleStyle: {
+            color: "#fff"
+        },
+        headerTintColor: "#fff",
+        headerLeft: <Icon name="menu" size={24}
+                          iconStyle={{ color: 'white' }}
+                          onPress={ () => navigation.navigate('DrawerToggle') } />
+    })
 })
 
 
@@ -73,7 +93,7 @@ const HomeNavigator = createStackNavigator({
                           color='white'
                           onPress={()=> navigation.toggleDrawer()}/>
     })
-})
+});
 
 const ContactNavigator = createStackNavigator({
     Contact:{screen: Contact},
@@ -91,7 +111,7 @@ const ContactNavigator = createStackNavigator({
                           color='white'
                           onPress={()=> navigation.toggleDrawer()}/>
     })
-})
+});
 
 const AboutNavigator = createStackNavigator({
     About:{screen: About},
@@ -189,6 +209,20 @@ const MainNavigator = createDrawerNavigator({
                         color={tintColor}
                     />
                 )
+            }
+        },
+        Reservation: { screen: ReservationNavigator,
+            navigationOptions: {
+                title: 'Reserve Table',
+                drawerLabel: 'Reserve Table',
+                drawerIcon: ({ tintColor, focused }) => (
+                    <Icon
+                        name='cutlery'
+                        type='font-awesome'
+                        size={24}
+                        iconStyle={{ color: tintColor }}
+                    />
+                ),
             }
         }
 
