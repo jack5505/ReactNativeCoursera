@@ -44,7 +44,6 @@ const MenuNavigator = createStackNavigator({
     DishDetail:{screen: DishDetail},
     Contact:{screen:Contact},
     About:{screen:About},
-    Reservation:{screen:Reservation}
 
 },{
     initialRouteName: 'Menu',
@@ -59,22 +58,7 @@ const MenuNavigator = createStackNavigator({
     }
 });
 
-const ReservationNavigator = createStackNavigator({
-    Reservation: { screen: Reservation }
-}, {
-    navigationOptions: ({ navigation }) => ({
-        headerStyle: {
-            backgroundColor: "#512DA8"
-        },
-        headerTitleStyle: {
-            color: "#fff"
-        },
-        headerTintColor: "#fff",
-        headerLeft: <Icon name="menu" size={24}
-                          iconStyle={{ color: 'white' }}
-                          onPress={ () => navigation.navigate('DrawerToggle') } />
-    })
-})
+
 
 
 const HomeNavigator = createStackNavigator({
@@ -97,6 +81,24 @@ const HomeNavigator = createStackNavigator({
 
 const ContactNavigator = createStackNavigator({
     Contact:{screen: Contact},
+},{
+    navigationOptions:({navigation}) =>({
+        headerStyle: {
+            backgroundColor:'#512DA8'
+        },
+        headerTintColor:'#fff',
+        headerTitleStyle:{
+            color:'#fff'
+        },
+        headerLeft: <Icon name="menu"
+                          size={24}
+                          color='white'
+                          onPress={()=> navigation.toggleDrawer()}/>
+    })
+});
+
+const ReservationNavigator = createStackNavigator({
+    Reservation:{screen: Reservation},
 },{
     navigationOptions:({navigation}) =>({
         headerStyle: {
@@ -211,20 +213,21 @@ const MainNavigator = createDrawerNavigator({
                 )
             }
         },
-        Reservation: { screen: ReservationNavigator,
-            navigationOptions: {
-                title: 'Reserve Table',
-                drawerLabel: 'Reserve Table',
-                drawerIcon: ({ tintColor,focused}) => (
-                    <Icon
-                        name='cutlery'
-                        type='font-awesome'
-                        size={24}
-                        iconStyle={{ color: tintColor }}
-                    />
-                ),
-            }
+    Reservation: {
+        screen:ReservationNavigator,
+        navigationOptions:{
+            title:'Reserve Table',
+            drawerLabel:'Reserve Table',
+            drawerIcon:({tintColor}) => (
+                <Icon
+                    name='cutlery'
+                    type='font-awesome'
+                    size={24}
+                    color={tintColor}
+                />
+            )
         }
+    }
 
 },{
     drawerBackgroundColor:'#D1C4E9',
