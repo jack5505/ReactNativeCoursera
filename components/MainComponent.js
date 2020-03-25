@@ -215,7 +215,7 @@ const MainNavigator = createDrawerNavigator({
             navigationOptions: {
                 title: 'Reserve Table',
                 drawerLabel: 'Reserve Table',
-                drawerIcon: ({ tintColor, focused }) => (
+                drawerIcon: ({ tintColor,focused}) => (
                     <Icon
                         name='cutlery'
                         type='font-awesome'
