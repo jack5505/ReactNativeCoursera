@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import {Text,View, ScrollView, FlatList} from 'react-native'
-import  {Card,Icon} from 'react-native-elements'
+import {Text, View, ScrollView, FlatList, Modal, StyleSheet, Button} from 'react-native'
+import  {Card,Icon,Rating} from 'react-native-elements'
 import {DISHES} from "../shared/dishes";
 import { COMMENTS} from "../shared/comments";
 import {baseUrl} from "../shared/baseUrl";
@@ -14,11 +14,11 @@ const mapStateToProps = state => {
         comments:state.comments,
         favorites:state.favorites
     }
-}
+};
 
 const mapDispatchToProps = dispatch => ({
     postFavorite:(dishId) => dispatch(postFavorite(dishId))
-})
+});
 
 
 function RenderDish(props) {
@@ -40,6 +40,12 @@ function RenderDish(props) {
                   color='#f50'
                   onPress={() => props.favorite ? console.log('Already favorite') : props.onPress()}
                   />
+            <Icon raised
+                  reverse
+                  name='pencil'
+                  type='font-awesome'
+                  color="#512DA8"
+            />
         </Card>
         )
     }
@@ -60,7 +66,7 @@ function RenderComments(props) {
             <Text style={{fontSize:12}}>{'--' + item.author +', ' + item.date}</Text>
         </View>
         )
-    }
+    };
 
     return(
         <Card title='Comments'>
@@ -75,16 +81,29 @@ function RenderComments(props) {
 
 class DishDetail extends Component{
 
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal:false
+        }
+
+    }
+
     markFavorite(dishId){
             this.props.postFavorite(dishId);
     }
 
-    static navigationOptions = {
-        title:'Dish Details'
+    toggleModal(){
+        this.setState({showModal:!this.showModal})
     }
 
+    static navigationOptions = {
+        title:'Dish Details'
+    };
+
     render() {
-        const dishId = this.props.navigation.getParam('dishId')
+        const dishId = this.props.navigation.getParam('dishId');
         return(
             <ScrollView>
                  <RenderDish
@@ -93,7 +112,28 @@ class DishDetail extends Component{
                      onPress={() => this.markFavorite(dishId)}
                     />
                  <RenderComments comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} />
+                <Modal animationType = {"slide"} transparent = {false}
+                       visible={this.state.showModal}
+                       onDismiss = {() => this.toggleModal() }
+                       onRequestClose = {() => this.toggleModal() }>
+                    <View style = {styles.modal}>
+                        <Rating showRating fractions="{1}" startingValue="{3.5}" />
+                        <Text style = {styles.modalText}>Number of Guests: {this.state.guests}</Text>
+                        <Text style = {styles.modalText}>Smoking?: {this.state.smoking ? 'Yes' : 'No'}</Text>
+                        <Text style = {styles.modalText}>Date and Time: {this.state.date}</Text>
 
+                        <Button
+                            onPress = {() =>{this.toggleModal();}}
+                            color="#512DA8"
+                            title="Submit"
+                        />
+                        <Button
+                            onPress = {() =>{this.toggleModal();}}
+                            color="#512DA8"
+                            title="Cancel"
+                        />
+                    </View>
+                </Modal>
             </ScrollView>
         )
     }
@@ -101,5 +141,37 @@ class DishDetail extends Component{
 
 
 }
+const styles = StyleSheet.create({
+    formRow:{
+        alignItems:'center',
+        justifyContent:'center',
+        flex:1,
+        flexDirection:'row',
+        margin:20
+    },
+    formLabel:{
+        fontSize:18,
+        flex:2
+    },
+    formItem:{
+        flex:1
+    },
+    modal:{
+        justifyContent: 'center',
+        margin:20
+    },
+    modalTitle:{
+        fontSize: 24,
+        fontWeight: 'bold',
+        backgroundColor:'#512DA8',
+        textAlign: 'center',
+        color:'white',
+        marginBottom:20
+    },
+    modalText:{
+        fontSize:18,
+        margin:10
+    }
+});
 
 export default connect(mapStateToProps,mapDispatchToProps)(DishDetail);

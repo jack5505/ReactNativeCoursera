@@ -77,7 +77,7 @@ class ReservationComponent extends Component{
                     />
                 </View>
                 <Modal animationType = {"slide"} transparent = {false}
-                       visible = {this.state.showModals}
+                       visible={this.state.showModals}
                        onDismiss = {() => this.toggleModal() }
                        onRequestClose = {() => this.toggleModal() }>
                     <View style = {styles.modal}>
@@ -129,6 +129,6 @@ const styles = StyleSheet.create({
         fontSize:18,
         margin:10
     }
-})
+});
 
 export default ReservationComponent;
