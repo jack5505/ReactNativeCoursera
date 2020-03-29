@@ -38,6 +38,7 @@ function RenderDish(props) {
                   name={props.favorite ? 'heart' : 'heart-o'}
                   type='font-awesome'
                   color='#f50'
+                  style={{flexDirection:'row',alignItems:'center'}}
                   onPress={() => props.favorite ? console.log('Already favorite') : props.onPress()}
                   />
             <Icon raised
@@ -45,6 +46,7 @@ function RenderDish(props) {
                   name='pencil'
                   type='font-awesome'
                   color="#512DA8"
+                  style={{flexDirection:'row',alignItems:'center'}}
             />
         </Card>
         )
@@ -117,7 +119,7 @@ class DishDetail extends Component{
                        onDismiss = {() => this.toggleModal() }
                        onRequestClose = {() => this.toggleModal() }>
                     <View style = {styles.modal}>
-                        <Rating showRating fractions="{1}" startingValue="{3.5}" />
+                        <Rating showRating fractions={1} startingValue={3.5} />
                         <Text style = {styles.modalText}>Number of Guests: {this.state.guests}</Text>
                         <Text style = {styles.modalText}>Smoking?: {this.state.smoking ? 'Yes' : 'No'}</Text>
                         <Text style = {styles.modalText}>Date and Time: {this.state.date}</Text>
