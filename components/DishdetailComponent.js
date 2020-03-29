@@ -5,7 +5,7 @@ import {DISHES} from "../shared/dishes";
 import { COMMENTS} from "../shared/comments";
 import {baseUrl} from "../shared/baseUrl";
 import {connect} from 'react-redux'
-import  {postFavorite} from "../redux/ActionCreators";
+import  {postFavorite,postComment} from "../redux/ActionCreators";
 
 
 const mapStateToProps = state => {
@@ -17,7 +17,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    postFavorite:(dishId) => dispatch(postFavorite(dishId))
+    postFavorite:(dishId) => dispatch(postFavorite(dishId)),
+    postComment:(comment) => dispatch(postComment(comment))
 });
 
 
@@ -106,6 +107,12 @@ class DishDetail extends Component{
         if(rating === undefined){
             rating = 3.5;
         }
+        const comment = {
+            rating: rating,
+            author: this.state.author,
+            comment: this.state.comment
+        };
+        this.props.postComment(comment);
         console.log("really" + rating+" "+this.state.author+" "+this.state.comment);
 
     }
