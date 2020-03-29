@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {Text, View, ScrollView, FlatList, Modal, StyleSheet, Button} from 'react-native'
-import  {Card,Icon,Rating} from 'react-native-elements'
+import  {Card,Icon,Rating,Input} from 'react-native-elements'
 import {DISHES} from "../shared/dishes";
 import { COMMENTS} from "../shared/comments";
 import {baseUrl} from "../shared/baseUrl";
@@ -47,6 +47,7 @@ function RenderDish(props) {
                   type='font-awesome'
                   color="#512DA8"
                   style={{flexDirection:'row',alignItems:'center'}}
+                  onPress={() => props.onPress1()}
             />
         </Card>
         )
@@ -87,7 +88,9 @@ class DishDetail extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            showModal:false
+            showModal:false,
+            author:'',
+            comment:'',
         }
 
     }
@@ -98,6 +101,17 @@ class DishDetail extends Component{
 
     toggleModal(){
         this.setState({showModal:!this.showModal})
+    }
+    saveData(rating){
+        if(rating === undefined){
+            rating = 3.5;
+        }
+        console.log("really" + rating+" "+this.state.author+" "+this.state.comment);
+
+    }
+
+    handleShow(){
+        this.toggleModal();
     }
 
     static navigationOptions = {
@@ -112,20 +126,43 @@ class DishDetail extends Component{
                      dishes={this.props.dishes.dishes[+dishId]}
                      favorite={this.props.favorites.some(el => el === dishId)}
                      onPress={() => this.markFavorite(dishId)}
+                     onPress1={()=>this.handleShow()}
                     />
                  <RenderComments comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} />
-                <Modal animationType = {"slide"} transparent = {false}
+                <Modal animationType = {"slide"}
+                       transparent = {false}
                        visible={this.state.showModal}
                        onDismiss = {() => this.toggleModal() }
                        onRequestClose = {() => this.toggleModal() }>
                     <View style = {styles.modal}>
-                        <Rating showRating fractions={1} startingValue={3.5} />
-                        <Text style = {styles.modalText}>Number of Guests: {this.state.guests}</Text>
-                        <Text style = {styles.modalText}>Smoking?: {this.state.smoking ? 'Yes' : 'No'}</Text>
-                        <Text style = {styles.modalText}>Date and Time: {this.state.date}</Text>
+                        <Rating showRating fractions={1} startingValue={3.5}  onFinishRating={this.saveData} />
+                        <Input
+                            onChangeText={(val)=>this.setState({author:val})}
+                            placeholder='Author'
+                            leftIcon={
+                                <Icon
+                                    name='user'
+                                    size={24}
+                                    color='black'
+                                />
+                            }
+                        />
+
+                        <Input
+                            onChangeText={(val)=>this.setState({comment:val})}
+                            placeholder='Comment'
+                            leftIcon={
+                                <Icon
+                                    name='user'
+                                    size={24}
+                                    color='black'
+                                />
+                            }
+                        />
+
 
                         <Button
-                            onPress = {() =>{this.toggleModal();}}
+                            onPress = {() =>{this.saveData();}}
                             color="#512DA8"
                             title="Submit"
                         />
