@@ -10,8 +10,8 @@ export const comments = (state = {
         case ActionType.COMMENTS_FAILED:
             return{...state,isLoading: false,errMess:action.payload};
         case ActionType.ADD_COMMENT:
-            var comment = action.payload;
-            comment.id = state.comments.length;
+            let comment = action.payload;
+            comment.id = Math.max(...state.comments.map((comment) => comment.id)) + 1;
             return {...state, comments: state.comments.concat(comment)};
         default:
             return state;

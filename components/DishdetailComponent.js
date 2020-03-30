@@ -34,7 +34,9 @@ function RenderDish(props) {
             <Text style={{margin:10}}>
                 {dish.description}
             </Text>
+            <View style={{ flexDirection: 'row', flex: 1, textAlign: 'center', justifyContent: 'center' }}>
             <Icon raised
+                  style={{ flex: 1 }}
                   reverse
                   name={props.favorite ? 'heart' : 'heart-o'}
                   type='font-awesome'
@@ -42,7 +44,8 @@ function RenderDish(props) {
                   style={{flexDirection:'row',alignItems:'center'}}
                   onPress={() => props.favorite ? console.log('Already favorite') : props.onPress()}
                   />
-            <Icon raised
+            <Icon style={{ flex: 1 }}
+                  raised
                   reverse
                   name='pencil'
                   type='font-awesome'
@@ -50,6 +53,7 @@ function RenderDish(props) {
                   style={{flexDirection:'row',alignItems:'center'}}
                   onPress={() => props.onPress1()}
             />
+            </View>
         </Card>
         )
     }
@@ -104,10 +108,12 @@ class DishDetail extends Component{
         this.setState({showModal:!this.showModal})
     }
     saveData(rating){
+        const dishId = this.props.navigation.getParam('dishId');
         if(rating === undefined){
             rating = 3.5;
         }
         const comment = {
+            dishId,
             rating: rating,
             author: this.state.author,
             comment: this.state.comment

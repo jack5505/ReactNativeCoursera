@@ -137,12 +137,12 @@ export const addFavorites = (dishId) => ({
     payload:dishId
 })
 
-export const postComment = (dishId, rating, author, comment) => (dispatch) => {
+export const postComment = (dishId,rating, author, comment) => (dispatch) => {
 
     const newComment = {
+        dishId:dishId,
         author: author,
         comment: comment,
-        dishId: dishId,
         rating: rating,
     };
     newComment.date = new Date().toISOString();
