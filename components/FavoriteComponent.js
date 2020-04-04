@@ -4,6 +4,8 @@ import {Card, ListItem} from 'react-native-elements'
 import {baseUrl} from "../shared/baseUrl";
 import {connect} from 'react-redux'
 import {LoadingComponent} from "./LoadingComponent";
+import SwipeOut from 'react-native-swipeout';
+import {deleteFavorites} from "../redux/ActionCreators";
 
 const mapStateToProps = state =>{
     return{
@@ -12,7 +14,9 @@ const mapStateToProps = state =>{
     }
 }
 
-
+const mapDispatchToProps = dispatch => ({
+    deleteFavorites:(dishId) => dispatch(deleteFavorites(dishId))
+})
 
 class Favorites extends Component{
 
