@@ -5,7 +5,7 @@ import {baseUrl} from "../shared/baseUrl";
 import {connect} from 'react-redux'
 import {LoadingComponent} from "./LoadingComponent";
 import SwipeOut from 'react-native-swipeout';
-import {deleteFavorites} from "../redux/ActionCreators";
+import {deleteFavorite} from "../redux/ActionCreators";
 
 const mapStateToProps = state =>{
     return{
@@ -15,7 +15,7 @@ const mapStateToProps = state =>{
 }
 
 const mapDispatchToProps = dispatch => ({
-    deleteFavorites:(dishId) => dispatch(deleteFavorites(dishId))
+    deleteFavorite:(dishId) => dispatch(deleteFavorite(dishId))
 })
 
 class Favorites extends Component{
@@ -27,15 +27,27 @@ class Favorites extends Component{
     render() {
         const {navigate} = this.props.navigation;
 
+
         const renderMenuItem = ({item,index}) =>{
+            const rightButton = [
+                {
+                    text:'Delete',
+                    type:'delete',
+                    onPress:() => this.props.deleteFavorite(item.id)
+                }
+            ];
+
             return(
-              <ListItem key={index}
-                        title={item.name}
-                        hideChevron={true}
-                        onPress={()=>navigate('Dishdetail',{dishId:item.id})}
-                        leftAvatar={{source:{uri:baseUrl+item.image}}}
-                        subtitle={item.description}/>
+                <SwipeOut right={rightButton} autoClose={true}>
+                  <ListItem key={index}
+                            title={item.name}
+                            hideChevron={true}
+                            onPress={()=>navigate('Dishdetail',{dishId:item.id})}
+                            leftAvatar={{source:{uri:baseUrl+item.image}}}
+                            subtitle={item.description}/>
+                </SwipeOut>
             );
+
         };
 
         if(this.props.dishes.isLoading){
@@ -63,4 +75,4 @@ class Favorites extends Component{
 
 }
 
-export default connect(mapStateToProps)(Favorites)
+export default connect(mapStateToProps,mapDispatchToProps)(Favorites)
