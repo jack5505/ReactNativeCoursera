@@ -12,7 +12,7 @@ import {fetchComments,fetchLeaders,fetchDishes,fetchPromotions} from "../redux/A
 import {connect} from 'react-redux'
 import Favorites from './FavoriteComponent'
 import Reservation from './ReservationComponent'
-import FavoriteComponent from "./FavoriteComponent";
+import Login from './LoginComponent';
 
 
 const mapStateToProps = state =>{
@@ -136,6 +136,8 @@ const FavoritesNavigator = createStackNavigator({
     })
 });
 
+
+
 const AboutNavigator = createStackNavigator({
     About:{screen: About},
 },{
@@ -152,7 +154,24 @@ const AboutNavigator = createStackNavigator({
                           color='white'
                           onPress={()=> navigation.toggleDrawer()}/>
     })
-})
+});
+const LoginNavigator = createStackNavigator({
+    Login:{screen: Login},
+},{
+    navigationOptions:({navigation}) =>({
+        headerStyle: {
+            backgroundColor:'#512DA8'
+        },
+        headerTintColor:'#fff',
+        headerTitleStyle:{
+            color:'#fff'
+        },
+        headerLeft: <Icon name="menu"
+                          size={24}
+                          color='white'
+                          onPress={()=> navigation.toggleDrawer()}/>
+    })
+});
 
 const CustomDrawerContentComponenet = (props) => (
         <ScrollView>
@@ -174,6 +193,21 @@ const CustomDrawerContentComponenet = (props) => (
 );
 
 const MainNavigator = createDrawerNavigator({
+    Login:{
+        screen: LoginNavigator,
+        navigationOptions:{
+            title:'Login',
+            drawerLabel:'Login',
+            drawerIcon:({tintColor}) => (
+                <Icon
+                    name='sign-in'
+                    type='font-awesome'
+                    size={24}
+                    color={tintColor}
+                />
+            )
+        }
+    },
         Home:{
            screen: HomeNavigator,
            navigationOptions:{
@@ -266,6 +300,9 @@ const MainNavigator = createDrawerNavigator({
     }
 
 },{
+    //To not to make first page of login we should write down following
+    //It will route to Home when app will open
+    initialRouteName:'Home',
     drawerBackgroundColor:'#D1C4E9',
     contentComponent:CustomDrawerContentComponenet
 })
